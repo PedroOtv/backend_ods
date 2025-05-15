@@ -9,6 +9,9 @@ import { FormaPagamentoModule } from './Forma_Pagamento/forma-pagamento.module';
 import { FuncionarioModule } from './Funcionario/funcionario.module';
 import { ItemProdutoModule } from './Item_Produto/item-produto.module';
 import { PedidoModule } from './Pedido/pedido.module';
+import { EmpresaModule } from './Empresa/empresa.module';
+import { FornecedorModule } from './Fornecedor/fornecedor.module';
+import { ProdutoModule } from './Produto/produto.module';
 
 @Module({
   imports: [
@@ -18,7 +21,10 @@ import { PedidoModule } from './Pedido/pedido.module';
     FormaPagamentoModule, 
     FuncionarioModule,
     ItemProdutoModule,
-    PedidoModule
+    PedidoModule,
+    EmpresaModule,
+    FornecedorModule,
+    ProdutoModule
   ],
   controllers: [AppController],
   providers: [AppService],

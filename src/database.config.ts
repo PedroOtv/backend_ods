@@ -3,6 +3,9 @@ import { FormaPagamento } from "./Forma_Pagamento/entite/forma-pagamento.entity"
 import { Funcionario } from "./Funcionario/entite/funcionario.entity";
 import { ItemProduto } from "./Item_Produto/entite/item-produtos.entity";
 import { Pedido } from "./Pedido/entite/pedido.entity";
+import { Empresa } from "./Empresa/entity/empresa.entity";
+import { Fornecedor } from "./Fornecedor/entity/fornecedor.entity";
+import { Produto } from "./Produto/entity/produto.entity";
 import { DataSource } from 'typeorm';
 
 const dataSourceOptions = new DataSource({
@@ -17,7 +20,10 @@ const dataSourceOptions = new DataSource({
         FormaPagamento,
         Funcionario,
         ItemProduto,
-        Pedido  
+        Pedido,
+        Empresa,
+        Fornecedor,
+        Produto
     ], // Entidades
     synchronize: true, // Sincroniza o esquema do banco de dados, apenas para desenvolvimento
     logging: true, //Ativa logs para visualizarmos possíveis erros,

@@ -4,16 +4,42 @@ import { UpdateItemProdutoDto } from './dto/update-item-produto.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { ItemProduto } from './entite/item-produtos.entity';
+import { Produto } from 'src/Produto/entity/produto.entity';
+import { Pedido } from 'src/Pedido/entite/pedido.entity';
 
 @Injectable()
 export class ItemProdutoService {
   constructor(
     @InjectRepository(ItemProduto)
     private readonly itemProdutoRepository: Repository<ItemProduto>,
-  ) {}
+
+    @InjectRepository(Produto)
+    private readonly ProdutoRepository: Repository<Produto>,
+
+    @InjectRepository(Pedido)
+    private readonly PedidoRepository: Repository<Pedido>,
+  ) { }
 
   async create(dto: CreateItemProdutoDto): Promise<ItemProduto> {
-    const item = this.itemProdutoRepository.create(dto);
+    // Buscar Produto pelo id passado na DTO
+    const produto = await this.ProdutoRepository.findOneBy({ id_produto: dto.fk_produto });
+    if (!produto) {
+      throw new NotFoundException(`Produto com id ${dto.fk_produto} não encontrado.`);
+    }
+
+    // Buscar Pedido pelo id passado na DTO
+    const pedido = await this.PedidoRepository.findOneBy({ id_pedido: dto.fk_pedido });
+    if (!pedido) {
+      throw new NotFoundException(`Pedido com id ${dto.fk_pedido} não encontrado.`);
+    }
+
+    // Criar o ItemProduto associando as entidades encontradas
+    const item = this.itemProdutoRepository.create({
+      ...dto,
+      produto,  // chave estrangeira objeto Produto
+      pedido,   // chave estrangeira objeto Pedido
+    });
+
     return this.itemProdutoRepository.save(item);
   }
 
